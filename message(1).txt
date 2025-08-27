@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMMORALITY 🌪️</title>
+    <style>
+        :root {
+            --neon-pink: #ff00de;
+            --neon-blue: #00f7ff;
+            --neon-white: #ffffff;
+            --dark-bg: #0a0a0a;
+            --section-bg: rgba(20, 20, 20, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--neon-white);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Header Glow Effect */
+        .header {
+            text-align: center;
+            padding: 1.5rem;
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: transparent;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-shadow: 0 0 10px rgba(255, 0, 222, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        /* Grid Layout (Responsive) */
+        .sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Section Styling */
+        .section {
+            background: var(--section-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 0, 222, 0.2);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--neon-pink);
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .section-content {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        /* Sexy Neon Button */
+        .neon-button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--neon-white);
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .neon-button::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-blue));
+            z-index: -1;
+            border-radius: 6px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .neon-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 0, 222, 0.3);
+        }
+
+        .neon-button:hover::before {
+            opacity: 0.6;
+        }
+
+        /* Snow Effect (Subtle) */
+        .snow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .flake {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .sections {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">IMMORALITY 🌪️</div>
+
+    <div class="sections">
+        <div class="section">
+            <div class="section-title">Refresher</div>
+            <div class="section-content">
+                <p>Automatically refresh pages at custom intervals to avoid detection.</p>
+                <button class="neon-button" onclick="alert('Refresher activated!')">Activate Refresher</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">AutoHar Bypasser</div>
+            <div class="section-content">
+                <p>Bypass HAR restrictions and automate requests with ease.</p>
+                <button class="neon-button" onclick="alert('AutoHar Bypasser engaged!')">Enable Bypasser</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Beaming</div>
+            <div class="section-content">
+                <p>High-performance beaming tools for maximum efficiency.</p>
+                <button class="neon-button" onclick="alert('Beaming initialized!')">Start Beaming</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Control Panel</div>
+            <div class="section-content">
+                <p>Master controls for all IMMORALITY TORNADO systems.</p>
+                <button class="neon-button" onclick="alert('Systems under your command!')">Access Control</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Snow Effect -->
+    <div class="snow" id="snow"></div>
+
+    <script>
+        // Create snowflakes
+        function createSnow() {
+            const snowContainer = document.getElementById('snow');
+            const flakeCount = 80;
+
+            for (let i = 0; i < flakeCount; i++) {
+                const flake = document.createElement('div');
+                flake.classList.add('flake');
+
+                // Random size between 1 and 3px (smaller for subtlety)
+                const size = Math.random() * 2 + 1;
+                flake.style.width = `${size}px`;
+                flake.style.height = `${size}px`;
+
+                // Random position
+                flake.style.left = `${Math.random() * 100}vw`;
+
+                // Random opacity (lighter)
+                flake.style.opacity = Math.random() * 0.6 + 0.4;
+
+                // Random animation duration (10-20s)
+                const duration = Math.random() * 10 + 10;
+                flake.style.animationDuration = `${duration}s`;
+
+                // Random delay
+                flake.style.animationDelay = `${Math.random() * 5}s`;
+
+                snowContainer.appendChild(flake);
+            }
+        }
+
+        // Initialize snow when page loads
+        window.onload = createSnow;
+    </script>
+</body>
+</html>
