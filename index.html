@@ -137,6 +137,42 @@
       display: none; /* hidden until popup is accepted */
     }
 
+    /* --- SEARCH BAR --- */
+    .search-bar {
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .search-bar input {
+      padding: 12px 15px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      width: 350px;
+      max-width: 80%;
+    }
+
+    .search-bar button {
+      padding: 12px 20px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
+      color: #333;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .search-bar button:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    /* --- TITLE --- */
     .title {
       font-size: 60px;
       font-weight: 900;
@@ -148,6 +184,55 @@
       text-shadow: 4px 4px 10px rgba(255, 255, 255, 0.15);
       letter-spacing: 2px;
       animation: titleGlow 3s infinite alternate;
+      cursor: default;
+    }
+
+    /* --- GLITCH EFFECT --- */
+    .title.glitch {
+      position: relative;
+      animation: glitchAnim 1s ease-in-out 1;
+    }
+
+    .title.glitch::before,
+    .title.glitch::after {
+      content: "IMMORTAL🌪️";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      color: #f0f;
+      opacity: 0.8;
+      clip: rect(0, 900px, 0, 0);
+    }
+
+    .title.glitch::before { animation: glitchTop 1s linear 1; }
+    .title.glitch::after { animation: glitchBottom 1s linear 1; }
+
+    @keyframes glitchAnim {
+      0% { transform: translate(0); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(2px, -2px); }
+      60% { transform: translate(-2px, 1px); }
+      80% { transform: translate(2px, -1px); }
+      100% { transform: translate(0); }
+    }
+
+    @keyframes glitchTop {
+      0%,20%,40%,60%,80%,100% { clip: rect(0,900px,0,0); }
+      10% { clip: rect(0,900px,30px,0); }
+      30% { clip: rect(10px,900px,40px,0); }
+      50% { clip: rect(20px,900px,50px,0); }
+      70% { clip: rect(10px,900px,35px,0); }
+      90% { clip: rect(5px,900px,25px,0); }
+    }
+
+    @keyframes glitchBottom {
+      0%,20%,40%,60%,80%,100% { clip: rect(0,900px,0,0); }
+      10% { clip: rect(40px,900px,70px,0); }
+      30% { clip: rect(50px,900px,80px,0); }
+      50% { clip: rect(60px,900px,90px,0); }
+      70% { clip: rect(55px,900px,85px,0); }
+      90% { clip: rect(45px,900px,75px,0); }
     }
 
     @keyframes titleGlow {
@@ -265,6 +350,12 @@
     <h1 class="title">IMMORTAL🌪️</h1>
     <p class="subtitle">Choose your destination below</p>
 
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input type="text" id="siteInput" placeholder="Enter a website URL...">
+      <button id="searchBtn">Go</button>
+    </div>
+
     <div class="buttons-grid">
       <button class="site-button" id="mainSite">
         <i class="icon fas fa-home"></i> Main Site
@@ -346,6 +437,29 @@
 
       snowContainer.appendChild(dot);
     }
+
+    // Search bar functionality
+    const searchBtn = document.getElementById("searchBtn");
+    searchBtn.onclick = () => {
+      const input = document.getElementById("siteInput").value.trim();
+      if(input) {
+        const url = input.startsWith("http") ? input : "https://" + input;
+        window.open(url, "_blank");
+      }
+    };
+
+    // IMMORTAL Glitch effect
+    const title = document.querySelector(".title");
+
+    // Trigger glitch on page load
+    title.classList.add("glitch");
+
+    // Trigger glitch on hover
+    title.addEventListener("mouseenter", () => {
+      title.classList.remove("glitch");
+      void title.offsetWidth; // reflow
+      title.classList.add("glitch");
+    });
   </script>
 </body>
 </html>
