@@ -36,20 +36,20 @@
     }
 
     .popup-box {
-      background: white;
+      background: #c82333;
+      color: white;
       padding: 40px 30px;
       border-radius: 15px;
       text-align: center;
       max-width: 400px;
       width: 90%;
       box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-      animation: fadeIn 0.5s ease;
+      animation: fadeIn 0.6s ease;
     }
 
     .popup-box h2 {
-      font-size: 24px;
+      font-size: 26px;
       margin-bottom: 25px;
-      color: #222;
     }
 
     .popup-buttons {
@@ -74,17 +74,33 @@
       color: white;
     }
 
-    .popup-buttons .yes-btn:hover {
-      background: #218838;
-    }
-
     .popup-buttons .no-btn {
-      background: #dc3545;
+      background: #000;
       color: white;
     }
 
-    .popup-buttons .no-btn:hover {
-      background: #c82333;
+    /* Button animations */
+    .yes-btn.clicked {
+      animation: yesClick 0.5s forwards;
+    }
+
+    .no-btn.clicked {
+      animation: noClick 0.6s forwards;
+    }
+
+    @keyframes yesClick {
+      0% { transform: scale(1); background: #28a745; }
+      50% { transform: scale(1.2); background: #34d058; }
+      100% { transform: scale(1); background: #28a745; }
+    }
+
+    @keyframes noClick {
+      0% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-8px); }
+      80% { transform: translateX(8px); }
+      100% { transform: translateX(0); }
     }
 
     @keyframes fadeIn {
@@ -257,14 +273,22 @@
     // Popup logic
     const popup = document.getElementById("popup");
     const mainContainer = document.getElementById("mainContainer");
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
 
-    document.getElementById("yesBtn").onclick = () => {
-      popup.style.display = "none";
-      mainContainer.style.display = "block";
+    yesBtn.onclick = () => {
+      yesBtn.classList.add("clicked");
+      setTimeout(() => {
+        popup.style.display = "none";
+        mainContainer.style.display = "block";
+      }, 500);
     };
 
-    document.getElementById("noBtn").onclick = () => {
-      window.location.href = "https://example.com"; // <-- Replace with your URL
+    noBtn.onclick = () => {
+      noBtn.classList.add("clicked");
+      setTimeout(() => {
+        window.location.href = "https://example.com"; // <-- Replace with your redirect URL
+      }, 600);
     };
 
     // Navigation handlers
