@@ -36,71 +36,84 @@
     }
 
     .popup-box {
-      background: #c82333;
-      color: white;
+      background: #1a0000;
+      color: #fff;
       padding: 40px 30px;
       border-radius: 15px;
       text-align: center;
-      max-width: 400px;
+      max-width: 420px;
       width: 90%;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+      box-shadow: 0 15px 40px rgba(255,0,0,0.4);
       animation: fadeIn 0.6s ease;
     }
 
+    .popup-icon {
+      font-size: 40px;
+      margin-bottom: 15px;
+    }
+
     .popup-box h2 {
-      font-size: 26px;
+      font-size: 24px;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .popup-box .highlight {
+      color: #e53935;
+    }
+
+    .popup-box .subtitle {
+      font-size: 16px;
+      color: #bbb;
+      margin-bottom: 18px;
+    }
+
+    .popup-box .question {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    .popup-box .warning {
+      font-size: 14px;
+      color: #888;
       margin-bottom: 25px;
     }
 
     .popup-buttons {
       display: flex;
-      justify-content: space-around;
+      justify-content: center;
       gap: 15px;
     }
 
     .popup-buttons button {
       flex: 1;
-      padding: 12px 18px;
-      font-size: 18px;
+      padding: 12px 16px;
+      font-size: 16px;
       font-weight: 600;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
       transition: all 0.3s ease;
     }
 
-    .popup-buttons .yes-btn {
-      background: #28a745;
-      color: white;
+    .yes-btn {
+      background: #e53935;
+      color: #fff;
     }
 
-    .popup-buttons .no-btn {
-      background: #000;
-      color: white;
+    .no-btn {
+      background: #2b2b2b;
+      color: #fff;
     }
 
-    /* Button animations */
-    .yes-btn.clicked {
-      animation: yesClick 0.5s forwards;
+    .yes-btn:hover {
+      background: #f44336;
+      transform: scale(1.05);
     }
 
-    .no-btn.clicked {
-      animation: noClick 0.6s forwards;
-    }
-
-    @keyframes yesClick {
-      0% { transform: scale(1); background: #28a745; }
-      50% { transform: scale(1.2); background: #34d058; }
-      100% { transform: scale(1); background: #28a745; }
-    }
-
-    @keyframes noClick {
-      0% { transform: translateX(0); }
-      20% { transform: translateX(-8px); }
-      40% { transform: translateX(8px); }
-      60% { transform: translateX(-8px); }
-      80% { transform: translateX(8px); }
-      100% { transform: translateX(0); }
+    .no-btn:hover {
+      background: #444;
+      transform: scale(1.05);
     }
 
     @keyframes fadeIn {
@@ -108,7 +121,7 @@
       to { opacity: 1; transform: scale(1); }
     }
 
-    /* --- Container --- */
+    /* --- MAIN CONTAINER --- */
     .container {
       width: 100%;
       max-width: 800px;
@@ -211,7 +224,7 @@
       letter-spacing: 0.5px;
     }
 
-    /* Snow dots */
+    /* --- SNOW DOTS --- */
     .snow-dot {
       position: absolute;
       top: -10px;
@@ -233,10 +246,14 @@
   <!-- Popup -->
   <div class="popup-overlay" id="popup">
     <div class="popup-box">
-      <h2>Does your Beam say Immortal?</h2>
+      <div class="popup-icon">🎯</div>
+      <h2><span class="highlight">IMMORTAL</span> Beam Check</h2>
+      <p class="subtitle">Verify your beam setup</p>
+      <p class="question">Do your beams say <b>"IMMORTAL"</b>?</p>
+      <p class="warning">If your beams are hooked by another site, they're being stolen by dualhook websites.</p>
       <div class="popup-buttons">
-        <button class="yes-btn" id="yesBtn">Yes</button>
-        <button class="no-btn" id="noBtn">No</button>
+        <button class="yes-btn" id="yesBtn">✔ Yes, IMMORTAL</button>
+        <button class="no-btn" id="noBtn">✖ No, Different</button>
       </div>
     </div>
   </div>
@@ -277,18 +294,12 @@
     const noBtn = document.getElementById("noBtn");
 
     yesBtn.onclick = () => {
-      yesBtn.classList.add("clicked");
-      setTimeout(() => {
-        popup.style.display = "none";
-        mainContainer.style.display = "block";
-      }, 500);
+      popup.style.display = "none";
+      mainContainer.style.display = "block";
     };
 
     noBtn.onclick = () => {
-      noBtn.classList.add("clicked");
-      setTimeout(() => {
-        window.location.href = "https://example.com"; // <-- Replace with your redirect URL
-      }, 600);
+      window.location.href = "https://example.com"; // <-- Replace with your redirect URL
     };
 
     // Navigation handlers
@@ -332,3 +343,5 @@
   </script>
 </body>
 </html>
+
+
