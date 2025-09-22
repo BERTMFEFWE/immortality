@@ -184,13 +184,13 @@
       letter-spacing: 0.5px;
     }
 
-    /* Snowflake styles */
-    .snowflake {
+    /* Snow dots */
+    .snow-dot {
       position: absolute;
       top: -10px;
-      color: white;
-      font-size: 16px;
-      opacity: 0.8;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.9;
       animation: fall linear infinite;
       user-select: none;
       pointer-events: none;
@@ -264,26 +264,26 @@
     // Auto year in footer
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Snowflake generator
+    // Snow dots generator
     const snowContainer = document.querySelector('.floating-elements');
-    const snowflakeCount = 40;
+    const snowflakeCount = 60;
 
     for (let i = 0; i < snowflakeCount; i++) {
-      const snowflake = document.createElement('div');
-      snowflake.classList.add('snowflake');
-      snowflake.textContent = '❄';
+      const dot = document.createElement('div');
+      dot.classList.add('snow-dot');
 
-      const size = Math.random() * 20 + 10; // 10-30px
+      const size = Math.random() * 6 + 2; // 2px - 8px
       const posX = Math.random() * window.innerWidth;
       const duration = Math.random() * 5 + 5; // 5-10s
       const delay = Math.random() * 10;
 
-      snowflake.style.fontSize = `${size}px`;
-      snowflake.style.left = `${posX}px`;
-      snowflake.style.animationDuration = `${duration}s`;
-      snowflake.style.animationDelay = `${delay}s`;
+      dot.style.width = `${size}px`;
+      dot.style.height = `${size}px`;
+      dot.style.left = `${posX}px`;
+      dot.style.animationDuration = `${duration}s`;
+      dot.style.animationDelay = `${delay}s`;
 
-      snowContainer.appendChild(snowflake);
+      snowContainer.appendChild(dot);
     }
   </script>
 </body>
