@@ -1,1 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IMMORTAL🌪️</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+/* --- your existing CSS (unchanged) --- */
+
+.status-label {
+  margin-top: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.status-indicator {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.status-up {
+  background: #00ff00;
+  box-shadow: 0 0 8px #00ff00;
+}
+.status-down {
+  background: #ff0000;
+  box-shadow: 0 0 8px #ff0000;
+}
+</style>
+</head>
+<body>
+
+<!-- Popup -->
+<div class="popup-overlay" id="popup">
+  <div class="popup-box">
+    <div class="popup-icon">🎯</div>
+    <h2><span class="highlight">IMMORTAL</span> Beam Check</h2>
+    <p class="subtitle">Verify your beam setup</p>
+    <p class="question">Do your beams say <b>"IMMORTAL"</b>?</p>
+    <p class="warning">If your beams are hooked by another site, they're being stolen by dualhook websites.</p>
+    <div class="popup-buttons">
+      <button class="yes-btn" id="yesBtn">✔ Yes, IMMORTAL</button>
+      <button class="no-btn" id="noBtn">✖ No, Different</button>
+    </div>
+  </div>
+</div>
+
+<div class="floating-elements"></div>
+
+<div class="container" id="mainContainer">
+  <h1 class="title">IMMORTAL🌪️</h1>
+  <p class="subtitle">Choose your destination below</p>
+
+  <div class="search-bar">
+    <input type="text" id="siteInput" placeholder="Search for a site...">
+    <button id="searchBtn">Search</button>
+  </div>
+
+  <div class="buttons-grid">
+    <div style="text-align:center;">
+      <button class="site-button" id="mainSite">Main Site</button>
+      <div class="status-label">
+        Main Site Status: <span id="mainStatus" class="status-indicator"></span>
+      </div>
+    </div>
+    <button class="site-button" id="backupSite">Backup Site</button>
+    <button class="site-button" id="autohar">Autohar</button>
+    <button class="site-button" id="cookieRefresher">Cookie Refresher</button>
+  </div>
+
+  <div class="discord-section">
+    <button class="discord-button" id="discordBtn"><i class="fab fa-discord"></i> Join Our Discord</button>
+  </div>
+
+  <p class="footer">© <span id="year"></span> IMMORTAL🌪️ | All rights reserved</p>
+</div>
+
+<script>
+// Popup
+const popup = document.getElementById("popup");
+const mainContainer = document.getElementById("mainContainer");
+document.getElementById("yesBtn").onclick = ()=>{popup.style.display="none"; mainContainer.style.display="block";}
+document.getElementById("noBtn").onclick = ()=>{window.location.href="https://streamable.com/mcogow";}
+
+// Navigation
+const buttons = {
+  mainSite:"https://www.logged.tg/auth/immortality",
+  backupSite:"https://app.beamers.si/u/Immortality",
+  autohar:"https://bloxtools.icu/generator/Immortal-/",
+  cookieRefresher:"https://bloxtools.art/refreshers/Drippzz/refresher.php"
+};
+Object.keys(buttons).forEach(id=>{document.getElementById(id).onclick=()=>{window.location.href=buttons[id]}});
+
+document.getElementById("discordBtn").onclick=()=>{window.location.href="https://discord.gg/zQPfRbrmjV";}
+
+// Footer Year
+document.getElementById("year").textContent = new Date().getFullYear();
+
+// Snow
+const snowContainer=document.querySelector('.floating-elements');
+for(let i=0;i<60;i++){
+  const dot=document.createElement('div'); dot.classList.add('snow-dot');
+  const size=Math.random()*6+2,posX=Math.random()*window.innerWidth,duration=Math.random()*5+5,delay=Math.random()*10;
+  dot.style.width=`${size}px`; dot.style.height=`${size}px`; dot.style.left=`${posX}px`;
+  dot.style.animationDuration=`${duration}s`; dot.style.animationDelay=`${delay}s`;
+  snowContainer.appendChild(dot);
+}
+
+// Glitch title
+const title=document.querySelector(".title");
+title.classList.add("glitch");
+title.addEventListener("mouseenter",()=>{title.classList.remove("glitch"); void title.offsetWidth; title.classList.add("glitch");});
+
+// Search highlight
+const searchBtn=document.getElementById("searchBtn");
+const siteInput=document.getElementById("siteInput");
+const siteButtons=document.querySelectorAll(".site-button");
+
+searchBtn.onclick=()=>{
+  const query=siteInput.value.toLowerCase();
+  siteButtons.forEach(btn=>{
+    if(btn.textContent.toLowerCase().includes(query)){btn.classList.add("highlight");}
+    else{btn.classList.remove("highlight");}
+  });
+};
+siteInput.addEventListener("keypress",(e)=>{if(e.key==="Enter") searchBtn.click();});
+
+// --- Main Site Status Check ---
+async function checkMainSite() {
+  const indicator = document.getElementById("mainStatus");
+  try {
+    const res = await fetch("https://www.logged.tg/auth/immortality", {mode:"no-cors"});
+    // no-cors won't let us read response.ok, but if it succeeds, assume up
+    indicator.className = "status-indicator status-up";
+  } catch (e) {
+    indicator.className = "status-indicator status-down";
+  }
+}
+// initial check
+checkMainSite();
+// refresh every 10 minutes
+setInterval(checkMainSite, 10 * 60 * 1000);
+</script>
+</body>
+</html>
+
 
