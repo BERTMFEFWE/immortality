@@ -7,10 +7,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 * {margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
-body {background:#000; min-height:100vh; display:flex; justify-content:center; align-items:flex-start; padding:20px; overflow-x:hidden; color:#0ff;}
-
+body {background:#000; color:#0ff; overflow-y:auto; scroll-behavior:smooth;}
 /* --- POPUP --- */
-.popup-overlay {position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); display:flex; justify-content:center; align-items:center; z-index:9999;}
+.popup-overlay {position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); display:flex; justify-content:center; align-items:center; z-index:9999;}
 .popup-box {background:#1a0000; color:#fff; padding:40px 30px; border-radius:15px; text-align:center; max-width:420px; width:90%; box-shadow:0 15px 40px rgba(255,0,0,0.4); animation:fadeIn 0.6s ease;}
 .popup-icon {font-size:40px; margin-bottom:15px;}
 .popup-box h2 {font-size:24px; margin-bottom:8px; font-weight:700;}
@@ -27,7 +26,7 @@ body {background:#000; min-height:100vh; display:flex; justify-content:center; a
 @keyframes fadeIn {from {opacity:0; transform:scale(0.9);} to {opacity:1; transform:scale(1);}}
 
 /* --- MAIN CONTAINER --- */
-.container {width:100%; max-width:800px; background:rgba(0,0,0,0.85); backdrop-filter:blur(10px); border-radius:25px; box-shadow:0 20px 40px rgba(0,0,0,0.5); padding:50px 40px; text-align:center; position:relative; z-index:1; overflow:hidden; display:none;}
+.container {width:100%; max-width:800px; background:rgba(0,0,0,0.85); backdrop-filter:blur(10px); border-radius:25px; box-shadow:0 20px 40px rgba(0,0,0,0.5); padding:50px 40px; text-align:center; margin:50px auto; min-height:80vh; position:relative; z-index:1;}
 
 /* --- TITLE --- */
 .title {font-size:60px; font-weight:900; margin-bottom:40px; background:linear-gradient(45deg,#ffffff,#cccccc,#ffffff); -webkit-background-clip:text; background-clip:text; color:transparent; text-shadow:4px 4px 10px rgba(0,255,255,0.15); letter-spacing:2px; animation:titleGlow 3s infinite alternate; cursor:default;}
@@ -64,7 +63,7 @@ body {background:#000; min-height:100vh; display:flex; justify-content:center; a
 @keyframes fall {0%{transform:translateY(0) rotate(0deg); opacity:1;}100%{transform:translateY(100vh) rotate(360deg); opacity:0.6;}}
 
 /* --- REVIEWS --- */
-.reviews {width:90%; max-width:1000px; margin:80px auto 50px auto; text-align:left;}
+.reviews {width:90%; max-width:1000px; margin:100px auto 50px auto; text-align:left;}
 .review {background:rgba(0,255,255,0.05); border:1px solid #0ff; border-radius:15px; padding:20px; margin-bottom:20px; opacity:0; transform:translateY(50px); transition:all 0.8s ease;}
 .review.visible {opacity:1; transform:translateY(0);}
 .review .stars {color:#0ff; font-size:18px; margin-bottom:8px;}
@@ -187,28 +186,4 @@ async function checkMainSite() {
       indicator.style.boxShadow = "0 0 8px #0f0";
     } else {
       indicator.style.background = "#f00";
-      indicator.style.boxShadow = "0 0 8px #f00";
-    }
-  } catch(e) {
-    indicator.style.background = "#f00";
-    indicator.style.boxShadow = "0 0 8px #f00";
-  }
-}
-checkMainSite();
-setInterval(checkMainSite, 10*60*1000); // every 10 minutes
-
-// --- Reviews fade-in ---
-const reviews = document.querySelectorAll(".review");
-function revealReviews() {
-  const triggerBottom = window.innerHeight * 0.85;
-  reviews.forEach(review => {
-    const top = review.getBoundingClientRect().top;
-    if(top < triggerBottom) review.classList.add("visible");
-  });
-}
-window.addEventListener("scroll", revealReviews);
-revealReviews();
-</script>
-
-</body>
-</html>
+      indicator.style.boxShadow = "0 0
