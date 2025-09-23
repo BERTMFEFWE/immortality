@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 * {margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
-body {background:#000; min-height:100vh; display:block; padding:20px; color:#0ff; overflow-y:auto;}
+body {background:#000; min-height:100vh; display:flex; justify-content:center; align-items:flex-start; padding:20px; overflow-x:hidden; color:#0ff;}
 
 /* --- POPUP --- */
 .popup-overlay {position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); display:flex; justify-content:center; align-items:center; z-index:9999;}
@@ -27,10 +27,10 @@ body {background:#000; min-height:100vh; display:block; padding:20px; color:#0ff
 @keyframes fadeIn {from {opacity:0; transform:scale(0.9);} to {opacity:1; transform:scale(1);}}
 
 /* --- MAIN CONTAINER --- */
-.container {width:90%; max-width:1200px; margin:0 auto; padding:50px 40px; text-align:center; position:relative; z-index:1; overflow:visible; display:none;}
+.container {width:100%; max-width:800px; background:rgba(0,0,0,0.85); backdrop-filter:blur(10px); border-radius:25px; box-shadow:0 20px 40px rgba(0,0,0,0.5); padding:50px 40px; text-align:center; position:relative; z-index:1; overflow:hidden; display:none;}
 
 /* --- TITLE --- */
-.title {font-size:80px; font-weight:900; margin-bottom:40px; background:linear-gradient(45deg,#ffffff,#cccccc,#ffffff); -webkit-background-clip:text; background-clip:text; color:transparent; text-shadow:4px 4px 10px rgba(0,255,255,0.15); letter-spacing:2px; animation:titleGlow 3s infinite alternate; cursor:default;}
+.title {font-size:60px; font-weight:900; margin-bottom:40px; background:linear-gradient(45deg,#ffffff,#cccccc,#ffffff); -webkit-background-clip:text; background-clip:text; color:transparent; text-shadow:4px 4px 10px rgba(0,255,255,0.15); letter-spacing:2px; animation:titleGlow 3s infinite alternate; cursor:default;}
 .title.glitch {position:relative; animation:glitchAnim 1s ease-in-out 1;}
 .title.glitch::before, .title.glitch::after {content:"IMMORTAL🌪️"; position:absolute; left:0; top:0; width:100%; color:#0ff; opacity:0.8; clip:rect(0,900px,0,0);}
 .title.glitch::before {animation:glitchTop 1s linear 1;}
@@ -63,12 +63,8 @@ body {background:#000; min-height:100vh; display:block; padding:20px; color:#0ff
 .snow-dot {position:absolute; top:-10px; background:white; border-radius:50%; opacity:0.9; animation:fall linear infinite; user-select:none; pointer-events:none;}
 @keyframes fall {0%{transform:translateY(0) rotate(0deg); opacity:1;}100%{transform:translateY(100vh) rotate(360deg); opacity:0.6;}}
 
-/* --- MAIN SITE STATUS --- */
-#statusContainer {margin-bottom:20px; font-size:18px; display:flex; align-items:center; justify-content:center; gap:10px;}
-.status-light {width:15px; height:15px; border-radius:50%; display:inline-block; background:red;}
-
 /* --- REVIEWS --- */
-.reviews {width:90%; max-width:1000px; margin:50px auto; text-align:left;}
+.reviews {width:90%; max-width:1000px; margin:80px auto 50px auto; text-align:left;}
 .review {background:rgba(0,255,255,0.05); border:1px solid #0ff; border-radius:15px; padding:20px; margin-bottom:20px; opacity:0; transform:translateY(50px); transition:all 0.8s ease;}
 .review.visible {opacity:1; transform:translateY(0);}
 .review .stars {color:#0ff; font-size:18px; margin-bottom:8px;}
@@ -98,8 +94,8 @@ body {background:#000; min-height:100vh; display:block; padding:20px; color:#0ff
   <h1 class="title">IMMORTAL🌪️</h1>
 
   <!-- Main Site Status -->
-  <div id="statusContainer">
-    Main Site Status: <span class="status-light" id="mainStatus"></span>
+  <div class="status-container" style="margin-bottom:20px; text-align:center; font-size:18px; font-weight:600; display:flex; justify-content:center; align-items:center; gap:10px;">
+    Main Site Status: <span id="mainStatus" style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#f00; box-shadow:0 0 8px #f00;"></span>
   </div>
 
   <p class="subtitle">Choose your destination below</p>
@@ -122,9 +118,6 @@ body {background:#000; min-height:100vh; display:block; padding:20px; color:#0ff
 
   <p class="footer">© <span id="year"></span> IMMORTAL🌪️ | All rights reserved</p>
 </div>
-
-<!-- Spacer so scrolling is needed -->
-<div style="height:100vh;"></div>
 
 <!-- Reviews Section -->
 <div class="reviews" id="reviewsSection">
@@ -151,7 +144,7 @@ const buttons = {
 };
 Object.keys(buttons).forEach(id=>{document.getElementById(id).onclick=()=>{window.location.href=buttons[id]}});
 
-document.getElementById("discordBtn").onclick=()=>{window.location.href="https://discord.gg/zQPfRbrmjV";}
+document.getElementById("discordBtn").onclick=()=>{window.location.href="https://discord.gg/zQPfRbrmjV"}
 
 // Footer Year
 document.getElementById("year").textContent = new Date().getFullYear();
@@ -185,17 +178,24 @@ searchBtn.onclick=()=>{
 siteInput.addEventListener("keypress",(e)=>{if(e.key==="Enter") searchBtn.click();});
 
 // --- Main Site Status ---
-const mainStatus = document.getElementById("mainStatus");
-async function checkStatus() {
+async function checkMainSite() {
+  const indicator = document.getElementById("mainStatus");
   try {
-    const res = await fetch(buttons.mainSite, {mode:'no-cors'});
-    mainStatus.style.background = 'green';
+    const res = await fetch("https://api.allorigins.win/get?url=" + encodeURIComponent("https://www.logged.tg/auth/immortality"));
+    if (res.ok) {
+      indicator.style.background = "#0f0";
+      indicator.style.boxShadow = "0 0 8px #0f0";
+    } else {
+      indicator.style.background = "#f00";
+      indicator.style.boxShadow = "0 0 8px #f00";
+    }
   } catch(e) {
-    mainStatus.style.background = 'red';
+    indicator.style.background = "#f00";
+    indicator.style.boxShadow = "0 0 8px #f00";
   }
 }
-checkStatus();
-setInterval(checkStatus, 600000); // every 10 min
+checkMainSite();
+setInterval(checkMainSite, 10*60*1000); // every 10 minutes
 
 // --- Reviews fade-in ---
 const reviews = document.querySelectorAll(".review");
