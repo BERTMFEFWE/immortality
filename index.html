@@ -63,9 +63,14 @@ body {background:#000; min-height:100vh; display:block; padding:20px; color:#0ff
 .snow-dot {position:absolute; top:-10px; background:white; border-radius:50%; opacity:0.9; animation:fall linear infinite; user-select:none; pointer-events:none;}
 @keyframes fall {0%{transform:translateY(0) rotate(0deg); opacity:1;}100%{transform:translateY(100vh) rotate(360deg); opacity:0.6;}}
 
+/* --- MAIN SITE STATUS --- */
+#statusContainer {margin-bottom:20px; font-size:18px; display:flex; align-items:center; justify-content:center; gap:10px;}
+.status-light {width:15px; height:15px; border-radius:50%; display:inline-block; background:red;}
+
 /* --- REVIEWS --- */
 .reviews {width:90%; max-width:1000px; margin:50px auto; text-align:left;}
-.review {background:rgba(0,255,255,0.05); border:1px solid #0ff; border-radius:15px; padding:20px; margin-bottom:20px;}
+.review {background:rgba(0,255,255,0.05); border:1px solid #0ff; border-radius:15px; padding:20px; margin-bottom:20px; opacity:0; transform:translateY(50px); transition:all 0.8s ease;}
+.review.visible {opacity:1; transform:translateY(0);}
 .review .stars {color:#0ff; font-size:18px; margin-bottom:8px;}
 .review .text {font-size:18px; color:#0ff;}
 </style>
@@ -91,6 +96,12 @@ body {background:#000; min-height:100vh; display:block; padding:20px; color:#0ff
 
 <div class="container" id="mainContainer">
   <h1 class="title">IMMORTAL🌪️</h1>
+
+  <!-- Main Site Status -->
+  <div id="statusContainer">
+    Main Site Status: <span class="status-light" id="mainStatus"></span>
+  </div>
+
   <p class="subtitle">Choose your destination below</p>
 
   <div class="search-bar">
@@ -112,28 +123,16 @@ body {background:#000; min-height:100vh; display:block; padding:20px; color:#0ff
   <p class="footer">© <span id="year"></span> IMMORTAL🌪️ | All rights reserved</p>
 </div>
 
-<!-- Spacer so you need to scroll -->
+<!-- Spacer so scrolling is needed -->
 <div style="height:100vh;"></div>
 
 <!-- Reviews Section -->
 <div class="reviews" id="reviewsSection">
   <h2 style="text-align:center; margin-bottom:30px; font-size:32px;">User Reviews</h2>
-  <div class="review">
-    <div class="stars">★★★★★</div>
-    <div class="text">Perfect site and best hits and beams!</div>
-  </div>
-  <div class="review">
-    <div class="stars">★★★★★</div>
-    <div class="text">Absolutely love it, nothing else comes close.</div>
-  </div>
-  <div class="review">
-    <div class="stars">★★★★★</div>
-    <div class="text">Best beam setup ever, super fast and reliable!</div>
-  </div>
-  <div class="review">
-    <div class="stars">★★★★★</div>
-    <div class="text">IMMORTAL🌪️ never disappoints, perfect every time.</div>
-  </div>
+  <div class="review"><div class="stars">★★★★★</div><div class="text">Perfect site and best hits and beams!</div></div>
+  <div class="review"><div class="stars">★★★★★</div><div class="text">Absolutely love it, nothing else comes close.</div></div>
+  <div class="review"><div class="stars">★★★★★</div><div class="text">Best beam setup ever, super fast and reliable!</div></div>
+  <div class="review"><div class="stars">★★★★★</div><div class="text">IMMORTAL🌪️ never disappoints, perfect every time.</div></div>
 </div>
 
 <script>
@@ -184,6 +183,31 @@ searchBtn.onclick=()=>{
   });
 };
 siteInput.addEventListener("keypress",(e)=>{if(e.key==="Enter") searchBtn.click();});
+
+// --- Main Site Status ---
+const mainStatus = document.getElementById("mainStatus");
+async function checkStatus() {
+  try {
+    const res = await fetch(buttons.mainSite, {mode:'no-cors'});
+    mainStatus.style.background = 'green';
+  } catch(e) {
+    mainStatus.style.background = 'red';
+  }
+}
+checkStatus();
+setInterval(checkStatus, 600000); // every 10 min
+
+// --- Reviews fade-in ---
+const reviews = document.querySelectorAll(".review");
+function revealReviews() {
+  const triggerBottom = window.innerHeight * 0.85;
+  reviews.forEach(review => {
+    const top = review.getBoundingClientRect().top;
+    if(top < triggerBottom) review.classList.add("visible");
+  });
+}
+window.addEventListener("scroll", revealReviews);
+revealReviews();
 </script>
 
 </body>
